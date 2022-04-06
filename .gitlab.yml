@@ -5,22 +5,23 @@ install-dependencies-job:
   stage: build
   script:
     - echo "Install npm dependencies"
-    - npm install
+    - sudo npm install
 
 build-code-job:
   stage: build
   script:
     - echo "Run build"
-    - npm run build
+    - sudo npm run build
 
 copy-files-nginx-job:
   stage: build
   script:
-    - echo "Deploy in local folder"
-    - cp ./dist /var/www/html
+    - echo "Remove old version and deploy"
+    - sudo rm -R -i /var/www/html/*
+    - sudo cp ./dist /var/www/html
 
 restart-nginx-job:
   stage: build
   script:
     - echo "Restart nginx"
-    - systemctl reload nginx
+    - sudo systemctl reload nginx
