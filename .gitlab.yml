@@ -1,0 +1,26 @@
+stages:
+  - build
+
+install-dependencies-job:
+  stage: build
+  script:
+    - echo "Install npm dependencies"
+    - npm install
+
+build-code-job:
+  stage: build
+  script:
+    - echo "Run build"
+    - npm run build
+
+copy-files-nginx-job:
+  stage: build
+  script:
+    - echo "Deploy in local folder"
+    - cp ./dist /var/www/html
+
+restart-nginx-job:
+  stage: build
+  script:
+    - echo "Restart nginx"
+    - systemctl reload nginx
